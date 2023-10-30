@@ -13,7 +13,9 @@ public class LoggingAspect {
     // this is where we add all our related advices for logging
 
     // this below is point cut expression in inverted commas
-    @Before("execution(public void addAccount())")
+
+    // below expression will match only for addAccount method inside AccountDAO class or interface
+    @Before("execution(public void com.example.aopdemo.dao.AccountDAO.addAccount())")
     public void beforeAddAccountAdvice(){
         System.out.println(PREFIX + " Executing @Before advice on addAccount()");
     }
