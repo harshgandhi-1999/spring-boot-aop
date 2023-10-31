@@ -1,5 +1,7 @@
 package com.example.aopdemo.dao;
 
 public interface MembershipDAO {
-    public void addAccount();
+    boolean addSillyMember();
+
+    void goToSleep();
 }
