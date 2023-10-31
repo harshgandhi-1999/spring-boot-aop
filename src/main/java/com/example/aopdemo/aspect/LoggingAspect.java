@@ -2,27 +2,15 @@ package com.example.aopdemo.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(2)
 public class LoggingAspect {
 
-    // Below are point cur declarations for multiple reuse
-    @Pointcut("execution(* com.example.aopdemo.dao.*.*(..))")
-    private void forDaoPackage(){}
-
-    @Pointcut("execution(* com.example.aopdemo.dao.*.get*(..))")
-    private void getter(){}
-
-    @Pointcut("execution(* com.example.aopdemo.dao.*.set*(..))")
-    private void setter(){}
-
-    @Pointcut("forDaoPackage() && !(getter() || setter())")
-    private void forDaoPackageNoGetterSetter(){}
-
-    private String PREFIX="====>>>>";
+    private static final String TAG = "LoggingAspect";
 
     // this is where we add all our related advices for logging
 
@@ -45,14 +33,9 @@ public class LoggingAspect {
     // below expression is for matching paramater type - here we have to write full path rather than just Account
     // "execution(* add*(com.example.aopdemo.Account))"
 
-    @Before("forDaoPackageNoGetterSetter()")
-    public void beforeAddAccountAdvice(){
-        System.out.println(PREFIX + " Executing @Before advice on addAccount()");
-    }
-
-    @Before("forDaoPackageNoGetterSetter()")
-    public void performApiAnalytics(){
-        System.out.println(PREFIX + " Executing @Before advice on performApiAnalytics()");
+    @Before("com.example.aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
+    public void beforeAddAccountAdvice() {
+        System.out.println("\n" + TAG + " Executing @Before advice on addAccount()");
     }
 
 }
