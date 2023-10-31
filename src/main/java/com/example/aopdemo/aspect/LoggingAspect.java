@@ -2,11 +2,16 @@ package com.example.aopdemo.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LoggingAspect {
+
+    // Below are point cur declarations for multiple reuse
+    @Pointcut("execution(* com.example.aopdemo.dao.*.*(..))")
+    private void forDaoPackage(){}
 
     private String PREFIX="====>>>>";
 
@@ -31,9 +36,13 @@ public class LoggingAspect {
     // below expression is for matching paramater type - here we have to write full path rather than just Account
     // "execution(* add*(com.example.aopdemo.Account))"
 
-    @Before("execution(* com.example.aopdemo.dao.*.*(..))")
+    @Before("forDaoPackage()")
     public void beforeAddAccountAdvice(){
         System.out.println(PREFIX + " Executing @Before advice on addAccount()");
     }
 
+    @Before("forDaoPackage()")
+    public void performApiAnalytics(){
+        System.out.println(PREFIX + " Executing @Before advice on performApiAnalytics()");
+    }
 }
