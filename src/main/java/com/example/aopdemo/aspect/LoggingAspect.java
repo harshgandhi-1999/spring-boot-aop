@@ -1,7 +1,10 @@
 package com.example.aopdemo.aspect;
 
+import com.example.aopdemo.Account;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Order(2)
 public class LoggingAspect {
 
-    private static final String TAG = "LoggingAspect";
+    private static final String TAG = "\n========== LoggingAspect:";
 
     // this is where we add all our related advices for logging
 
@@ -34,8 +37,24 @@ public class LoggingAspect {
     // "execution(* add*(com.example.aopdemo.Account))"
 
     @Before("com.example.aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
-    public void beforeAddAccountAdvice() {
-        System.out.println("\n" + TAG + " Executing @Before advice on addAccount()");
+    public void beforeAddAccountAdvice(JoinPoint joinPoint) {
+        System.out.println(TAG + " Executing @Before advice on addAccount()");
+
+        // display the method signature
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        System.out.println(TAG + " Method = " + methodSignature);
+
+        // display method arguments
+        Object[] args = joinPoint.getArgs();
+
+        for(Object arg: args){
+            System.out.println(arg);
+
+            if(arg instanceof Account account){
+                System.out.println("Account Name: " + account.getName());
+                System.out.println("Account Level: " + account.getLevel());
+            }
+        }
     }
 
 }

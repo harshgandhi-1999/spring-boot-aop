@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(3)
 public class MyApiAnalyticsAspect {
-    private static final String TAG = "MyApiAnalyticsAspect";
+    private static final String TAG = "\n========== MyApiAnalyticsAspect:";
 
     @Before("com.example.aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
     public void performApiAnalytics() {
-        System.out.println("\n" + TAG + " Executing @Before advice on performApiAnalytics()");
+        System.out.println(TAG + " Executing @Before advice on performApiAnalytics()");
     }
 }

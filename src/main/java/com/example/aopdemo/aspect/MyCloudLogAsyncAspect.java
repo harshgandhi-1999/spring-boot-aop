@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class MyCloudLogAsyncAspect {
 
-    private static final String TAG = "MyCloudLogAsyncAspect";
+    private static final String TAG = "\n========== MyCloudLogAsyncAspect:";
 
     @Before("com.example.aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
     public void logToCloudASync() {
-        System.out.println("\n" + TAG + " Executing @Before advice for logToCloudAsync()");
+        System.out.println(TAG + " Executing @Before advice for logToCloudAsync()");
     }
 }
