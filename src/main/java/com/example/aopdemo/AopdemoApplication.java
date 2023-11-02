@@ -21,7 +21,8 @@ public class AopdemoApplication {
         return runner -> {
             //demoBeforeAdvice(accountDAO,membershipDAO);
             //demoAfterReturningAdvice(accountDAO);
-            demoAfterThrowingAdvice(accountDAO);
+            //demoAfterThrowingAdvice(accountDAO);
+            demoAfterAdvice(accountDAO);
         };
     }
 
@@ -60,6 +61,24 @@ public class AopdemoApplication {
         }
 
         System.out.println("\n\nMain program: demoAfterThrowingAdvice");
+        System.out.println("----------------");
+
+        System.out.println(accounts + "\n");
+    }
+
+    // after advice works as a finally in try catch
+    private void demoAfterAdvice(AccountDAO accountDAO) {
+        List<Account> accounts = null;
+
+        try {
+            // make a boolean flag just to simulate the exception
+            boolean flag;
+            accounts = accountDAO.findAccounts(true);
+        } catch (Exception e) {
+            System.out.println("\n\nMain program: ...caught exception: " + e);
+        }
+
+        System.out.println("\n\nMain program: demoAfterAdvice");
         System.out.println("----------------");
 
         System.out.println(accounts + "\n");

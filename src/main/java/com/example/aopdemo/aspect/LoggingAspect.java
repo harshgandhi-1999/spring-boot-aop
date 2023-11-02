@@ -2,10 +2,7 @@ package com.example.aopdemo.aspect;
 
 import com.example.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -51,10 +48,10 @@ public class LoggingAspect {
         // display method arguments
         Object[] args = joinPoint.getArgs();
 
-        for(Object arg: args){
+        for (Object arg : args) {
             System.out.println(arg);
 
-            if(arg instanceof Account account){
+            if (arg instanceof Account account) {
                 System.out.println("Account Name: " + account.getName());
                 System.out.println("Account Level: " + account.getLevel());
             }
@@ -66,7 +63,7 @@ public class LoggingAspect {
             pointcut = "execution(* com.example.aopdemo.dao.AccountDAO.findAccounts(..))",
             returning = "result"
     )
-    public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result){
+    public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
 
         // print out which method we are advising on
         String method = joinPoint.getSignature().toShortString();
@@ -78,8 +75,8 @@ public class LoggingAspect {
 
     }
 
-    @AfterThrowing(pointcut = "execution(* com.example.aopdemo.dao.AccountDAO.findAccounts(..))",throwing = "myExc")
-    public void afterThrowingFindAccountAdvice(JoinPoint joinPoint,Throwable myExc){
+    @AfterThrowing(pointcut = "execution(* com.example.aopdemo.dao.AccountDAO.findAccounts(..))", throwing = "myExc")
+    public void afterThrowingFindAccountAdvice(JoinPoint joinPoint, Throwable myExc) {
         // print out which method we are advising on
         String method = joinPoint.getSignature().toShortString();
         System.out.println(TAG + " Executing @AfterThrowing on method: " + method);
@@ -87,5 +84,12 @@ public class LoggingAspect {
         // print out the result
 
         System.out.println(TAG + " The exception is = " + myExc);
+    }
+
+    @After("execution(* com.example.aopdemo.dao.AccountDAO.findAccounts(..))")
+    public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
+        // print out which method we are advising on
+        String method = joinPoint.getSignature().toShortString();
+        System.out.println(TAG + " Executing @After (finally) on method: " + method);
     }
 }
