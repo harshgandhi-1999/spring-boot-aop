@@ -1,6 +1,5 @@
 package com.example.aopdemo.service;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -22,5 +21,14 @@ public class TrafficFortuneServiceImpl implements TrafficFortuneService {
         // return a fortune
 
         return "Expect heavy traffic";
+    }
+
+    @Override
+    public String getFortune(boolean flag) {
+        if (flag) {
+            throw new RuntimeException("Exception raised");
+        }
+
+        return getFortune();
     }
 }

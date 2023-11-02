@@ -105,7 +105,14 @@ public class LoggingAspect {
         long begin = System.currentTimeMillis();
 
         // execute the method
-        Object result = proceedingJoinPoint.proceed();
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (Exception exc) {
+            // we are handling the exception here and not rethrowing it to the calling program.
+            System.out.println(exc.getMessage());
+            result = "No result";
+        }
 
         // get emd timestamp
         long end = System.currentTimeMillis();
