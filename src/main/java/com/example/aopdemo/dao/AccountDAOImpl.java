@@ -15,6 +15,16 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> findAccounts() {
+        return findAccounts(false);
+    }
+
+    @Override
+    public List<Account> findAccounts(boolean flag) {
+
+        if (flag) {
+            throw new RuntimeException("Runtime excpetion in findAccounts");
+        }
+
         List<Account> accounts = new ArrayList<>();
 
         // create sample accounts

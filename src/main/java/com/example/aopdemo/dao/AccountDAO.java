@@ -7,6 +7,8 @@ import java.util.List;
 public interface AccountDAO {
     List<Account> findAccounts();
 
+    List<Account> findAccounts(boolean flag);
+
     void addAccount(Account account, boolean flag);
 
     boolean doWork();
